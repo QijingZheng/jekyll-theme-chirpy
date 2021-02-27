@@ -5,7 +5,8 @@ theme: jekyll-theme-chirpy
 
 # Only if your site type is GitHub Project sites and doesn't have a custom domain,
 # change below value to '/projectname'.
-baseurl: ''
+url: http://staff.ustc.edu.cn
+baseurl: /~zqj
 
 # the HTML language tag › https://www.w3.org/International/questions/qa-choosing-language-tags
 lang: en-US
@@ -13,11 +14,18 @@ lang: en-US
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Asia/Shanghai
 
+sidebar-bg: #FFAABB
+
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # --------------------------
-title: Chirpy                          # the main title
+title: Qijing Zheng                          # the main title
 
-tagline: A text-focused Jekyll theme   # it will display as the sub-title
+tagline: |- # it will display as the sub-title
+    <div style="height: 6px"> </div>
+    Department of Physics <br />
+    <div style="height: 6px"> </div>
+    University of Science &amp; Technology of China 
+    <div style="height: 12px"> </div>
 
 description: >-                        # used by seo meta and the atom feed
   A minimal, portfolio, sidebar,
@@ -27,21 +35,21 @@ description: >-                        # used by seo meta and the atom feed
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: ''
 
-author: your_full_name                  # change to your full name
+author: Qijing Zheng                  # change to your full name
 
 github:
-  username: github_username             # change to your github username
+  username: QijingZheng             # change to your github username
 
-twitter:
-  username: twitter_username            # change to your twitter username
+# twitter:
+#   username: twitter_username            # change to your twitter username
 
 social:
-  name: your_full_name                  # it will shows as the copyright owner in Footer
-  email: example@doamin.com             # change to your email address
+  name: Qijing Zheng                  # it will shows as the copyright owner in Footer
+  email: zqj@ustc.edu.cn             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
+    # - https://twitter.com/username      # change to your twitter homepage
+    - https://github.com/QijingZheng       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -81,7 +89,8 @@ theme_mode:   # [light|dark]
 img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
-avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+# avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
+avatar: /assets/img/profile.jpg
 
 # boolean type, the global switch for ToC in posts.
 toc: true
@@ -173,3 +182,26 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
+
+# Jeykll-Scholar
+scholar:
+  last_name:             Zheng
+  first_name:            Qijing
+
+  style:                 apa
+  locale:                en
+  sort_by:               year, month
+  order:                 descending
+
+  source:                _bibliography
+  bibliography:          zqj_pub.bib
+  bibliography_template: bib
+
+  replace_strings:       true
+  join_strings:          true
+
+  details_dir:           bibliography
+  details_layout:        bibtex.html
+  details_link:          Details
+
+  query:                 "@*"
