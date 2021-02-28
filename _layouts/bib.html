@@ -9,6 +9,16 @@
   &quot;
 </div>
 <div>
+  {% assign author_is_first = false %}
+  {% if entry.first == 'true' %}
+    {% assign author_is_first = true %}
+  {% endif %}
+
+  {% assign author_is_corresponding = false %}
+  {% if entry.corresponding == 'true' %}
+    {% assign author_is_corresponding = true %}
+  {% endif %}
+
   {% for author in entry.author_array %}
     {% assign author_is_self = false %}
     {% if author.last == site.scholar.last_name%}
@@ -28,25 +38,36 @@
     
     {% if forloop.length == 1 %}
       {% if author_is_self %}
-        <span style="color: #FF0000">{{author.last}}, {{author.first}};</span>
+        <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>
       {% else %}
-        {{author.last}}, {{author.first}};
+        {{author.last}}, {{author.first}}
       {% endif %}
     {% else %}
       {% unless forloop.last %}
         {% if author_is_self %}
-          <span style="color: #FF0000">{{author.last}}, {{author.first}};</span>
+          {% if author_is_first %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>#</sup>;</span>
+          {% elsif author_is_corresponding %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>*</sup>;</span>
+          {% else %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>;
+          {% endif %}
         {% else %}
           {% if coauthor_url %}
-            <a href="{{coauthor_url}}" target="_blank">{{author.last}},
-              {{author.first}};</a>,
+            <a href="{{coauthor_url}}" target="_blank">{{author.last}}, {{author.first}};</a>,
           {% else %}
             {{author.last}}, {{author.first}};
           {% endif %}
         {% endif %}
       {% else %}
         {% if author_is_self %}
-          <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>
+          {% if author_is_first %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>#</sup></span>
+          {% elsif author_is_corresponding %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>*</sup></span>
+          {% else %}
+            <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>
+          {% endif %}
         {% else %}
           {% if coauthor_url %}
             <a href="{{coauthor_url}}" target="_blank">{{author.last}}, {{author.first}}</a>
