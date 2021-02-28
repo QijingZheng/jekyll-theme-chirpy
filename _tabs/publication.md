@@ -2,7 +2,7 @@
 title: Publications
 author: Qijing Zheng
 icon: fas fa-newspaper
-years: [2010, 2014, 2016, 2017, 2018, 2019, 2020]
+years: [2010, 2014, 2016, 2017, 2018, 2019, 2020, 2021]
 toc: true
 order: 2
 ---
