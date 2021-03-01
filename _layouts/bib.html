@@ -11,8 +11,8 @@
 
 <div>
 
-  {% assign first_authors = entry.first_authors | split: ',' %}
-  {% assign corresponding_authors = entry.corresponding_authors | split: ',' %}
+  {% assign first_authors = entry.first_authors | split: ', ' %}
+  {% assign corresponding_authors = entry.corresponding_authors | split: ', ' %}
 
   {% for author in entry.author_array %}
     {% assign author_is_self = false %}
@@ -88,32 +88,85 @@
 <!--   Published on: {{ entry.month }}, {{ entry.year }}  -->
 <!-- </div> -->
 
-<div id="{{key}}-materials">
-  <div>
-    <div class="btn-group btn-block">
-      {% if entry.doi %}
-        <button class="btn btn-sm" type="button">
-          <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a>
-        </button>
-      {% endif %}
-      &nbsp;
-      <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-        BibTeX
-      </button>
-      &nbsp;
-      <div class="dropdown-menu">
-        <pre class="pre pre-scrollable">{{ entry.bibtex }}</pre>
-      </div>
-      {% if entry.abstract %}
-        <div class="btn-group btn-block">
-          <button class="btn btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-            Abstract
-          </button>
-          <div class="dropdown-menu" style="text-align: justify">
-            {{ entry.abstract }}
-          </div>
+<!-- <div id="{{key}}&#45;materials"> -->
+<!--   <div> -->
+<!--     <div class="btn&#45;group btn&#45;block"> -->
+<!--       {% if entry.doi %} -->
+<!--         <button class="btn btn&#45;sm" type="button"> -->
+<!--           <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a> -->
+<!--         </button> -->
+<!--       {% endif %} -->
+<!--       &#38;nbsp; -->
+<!--       <button class="btn btn&#45;sm dropdown&#45;toggle" type="button" data&#45;toggle="dropdown"> -->
+<!--         BibTeX -->
+<!--       </button> -->
+<!--       &#38;nbsp; -->
+<!--       <div class="dropdown&#45;menu"> -->
+<!--         <pre class="pre pre&#45;scrollable">{{ entry.bibtex }}</pre> -->
+<!--       </div> -->
+<!--       {% if entry.abstract %} -->
+<!--         <div class="btn&#45;group btn&#45;block"> -->
+<!--           <button class="btn btn&#45;sm dropdown&#45;toggle" type="button" data&#45;toggle="dropdown"> -->
+<!--             Abstract -->
+<!--           </button> -->
+<!--           <div class="dropdown&#45;menu" style="text&#45;align: justify"> -->
+<!--             {{ entry.abstract }} -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       {% endif %} -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<div>
+  {% if entry.doi %}
+	<button class="btn btn-sm" type="button">
+	  <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a>
+	</button>
+  {% endif %}
+  <button type="button" class="btn btn-sm" data-toggle="modal"
+                                           data-target="{{ entry.key | prepend: "#mybib_" }}">
+    bibtex
+  </button>
+  <button type="button" class="btn btn-sm" data-toggle="modal"
+                                           data-target="{{ entry.key | prepend: "#myabs_" }}">
+    abstract
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id={{ entry.key | prepend: "myabs_" }} role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-      {% endif %}
+        <div class="modal-body">
+          <p>
+            {{ entry.abstract }}
+		  </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id={{ entry.key | prepend: "mybib_" }} role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <pre>{{ entry.bibtex }} </pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
