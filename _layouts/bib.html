@@ -8,37 +8,35 @@
   </i>
   &quot;
 </div>
-<div>
-  {% assign author_is_first = false %}
-  {% if entry.first == 'true' %}
-    {% assign author_is_first = true %}
-  {% endif %}
 
-  {% assign author_is_corresponding = false %}
-  {% if entry.corresponding == 'true' %}
-    {% assign author_is_corresponding = true %}
-  {% endif %}
+<div>
+
+  {% assign first_authors = entry.first_authors | split: ',' %}
+  {% assign corresponding_authors = entry.corresponding_authors | split: ',' %}
 
   {% for author in entry.author_array %}
     {% assign author_is_self = false %}
+    {% assign author_is_first = false %}
+    {% assign author_is_corresponding = false %}
+    {% assign author_full_name = author.last | append: " " | append: author.first %}
+
     {% if author.last == site.scholar.last_name%}
       {% if site.scholar.first_name contains author.first%}
         {% assign author_is_self = true %}
       {% endif %}
     {% endif %}
-    {% assign coauthor_url = nil %}
-    {% if site.data.coauthors[author.last] %}
-      {% for coauthor in site.data.coauthors[author.last] %}
-        {% if coauthor.firstname contains author.first %}
-          {% assign coauthor_url = coauthor.url %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
+
+    {% if first_authors contains author_full_name or forloop.first%}
+      {% assign author_is_first = true %}
+    {% endif %}
+
+    {% if corresponding_authors contains {{author_full_name}} %}
+      {% assign author_is_corresponding = true %}
     {% endif %}
     
     {% if forloop.length == 1 %}
       {% if author_is_self %}
-        <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>
+        <span style="color: #0A4EB9">{{author.last}}, {{author.first}}</span>
       {% else %}
         {{author.last}}, {{author.first}}
       {% endif %}
@@ -46,33 +44,37 @@
       {% unless forloop.last %}
         {% if author_is_self %}
           {% if author_is_first %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>#</sup>;</span>
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}<sup>#</sup>;</span>
           {% elsif author_is_corresponding %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>*</sup>;</span>
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}*;</span>
           {% else %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>;
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}};</span>
           {% endif %}
         {% else %}
-          {% if coauthor_url %}
-            <a href="{{coauthor_url}}" target="_blank">{{author.last}}, {{author.first}};</a>,
+          {% if author_is_first %}
+            <span>{{author.last}}, {{author.first}}<sup>#</sup>;</span>
+          {% elsif author_is_corresponding %}
+            <span>{{author.last}}, {{author.first}}*;</span>
           {% else %}
-            {{author.last}}, {{author.first}};
+            <span>{{author.last}}, {{author.first}};</span>
           {% endif %}
         {% endif %}
       {% else %}
         {% if author_is_self %}
           {% if author_is_first %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>#</sup></span>
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}<sup>#</sup></span>
           {% elsif author_is_corresponding %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}<sup>*</sup></span>
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}*</span>
           {% else %}
-            <span style="color: #FF0000">{{author.last}}, {{author.first}}</span>
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}</span>
           {% endif %}
         {% else %}
-          {% if coauthor_url %}
-            <a href="{{coauthor_url}}" target="_blank">{{author.last}}, {{author.first}}</a>
+          {% if author_is_first %}
+            <span>{{author.last}}, {{author.first}}<sup>#</sup></span>
+          {% elsif author_is_corresponding %}
+            <span>{{author.last}}, {{author.first}}*</span>
           {% else %}
-            {{author.last}}, {{author.first}}
+            <span>{{author.last}}, {{author.first}}</span>
           {% endif %}
         {% endif %}
       {% endunless %}
@@ -82,6 +84,9 @@
 <div>
   <i>{{ entry.journal }}</i>, <b>{{ entry.volume }}</b>, {{ entry.pages }} ({{ entry.year }})
 </div>
+<!-- <div> -->
+<!--   Published on: {{ entry.month }}, {{ entry.year }}  -->
+<!-- </div> -->
 
 <div id="{{key}}-materials">
   <div>

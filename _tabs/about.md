@@ -79,6 +79,10 @@ An up-to-date list is available on
 Google Scholar.
 </a>
 
+<div>
+    <sup>&#x23;</sup> for first/co-first author, * for corresponding/co-corresponding author.
+</div>
+
 {% for y in page.years reversed %}
   <h3  id="{{y}}" style="color: #008C93; border-bottom: 1px solid #f2f3f3;">{{y}}</h3>
   {% bibliography -f zqj_pub -q @*[year={{y}}]* %}

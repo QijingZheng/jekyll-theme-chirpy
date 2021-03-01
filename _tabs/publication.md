@@ -12,7 +12,11 @@ An up-to-date list is available on
 Google Scholar.
 </a>
 
-{% bibliography_count -f zqj_pub %} papers in total.
+<div>
+    <em>{% bibliography_count -f zqj_pub %}</em> papers in total.
+    <br />
+    <sup>&#x23;</sup> for first/co-first author, * for corresponding/co-corresponding author.
+</div>
 
 
 {% for y in page.years reversed %}
