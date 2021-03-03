@@ -2,11 +2,11 @@
 ---
 
 <div>
-  &quot;
+  <!-- &#38;quot; -->
   <i>
   {{ entry.title }}
   </i>
-  &quot;
+  <!-- &#38;quot; -->
 </div>
 
 <div>
@@ -82,7 +82,9 @@
   {% endfor %}
 </div>
 <div>
-  <i>{{ entry.journal }}</i>, <b>{{ entry.volume }}</b>, {{ entry.pages }} ({{ entry.year }})
+  <span style="color: #048D67"><i>{{ entry.journal }}</i>, {{ entry.volume }}, {{ entry.pages }} ({{ entry.year }}) </span>
+  <br />
+  <span style="color: #000000">Published: {{entry.month | capitalize: }}, {{entry.year}}</span>
 </div>
 <!-- <div> -->
 <!--   Published on: {{ entry.month }}, {{ entry.year }}  -->
@@ -128,13 +130,16 @@
                                            data-target="{{ entry.key | prepend: "#mybib_" }}">
     bibtex
   </button>
-  <button type="button" class="btn btn-sm" data-toggle="modal"
-                                           data-target="{{ entry.key | prepend: "#myabs_" }}">
-    abstract
-  </button>
+  {% if entry.abstract %}
+    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                             data-target="{{ entry.key | prepend: "#myabs_" }}">
+      abstract
+    </button>
+  {% endif %}
 
   <!-- Modal -->
-  <div class="modal fade" id={{ entry.key | prepend: "myabs_" }} role="dialog">
+  {% if entry.abstract %}
+  <div class="modal fade" id="{{ entry.key | prepend: "myabs_" }}" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
@@ -152,8 +157,9 @@
       </div>
     </div>
   </div>
+  {% endif %}
 
-  <div class="modal fade" id={{ entry.key | prepend: "mybib_" }} role="dialog">
+  <div class="modal fade" id="{{ entry.key | prepend: "mybib_" }}" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">

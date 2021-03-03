@@ -75,7 +75,7 @@ order: 1
 ## Publications
 
 An up-to-date list is available on
-<a href="https://scholar.google.com/citations?user=qeF95iQAAAAJ&hl=en">
+<a href="https://scholar.google.com/citations?user=qeF95iQAAAAJ&hl=en" target="_blank">
 Google Scholar.
 </a>
 
