@@ -1,0 +1,178 @@
+---
+---
+
+<div>
+  <!-- &#38;quot; -->
+  <i>
+  {{ entry.title }}
+  </i>
+  <!-- &#38;quot; -->
+</div>
+
+<div>
+
+  {% assign first_authors = entry.first_authors | split: ', ' %}
+  {% assign corresponding_authors = entry.corresponding_authors | split: ', ' %}
+
+  {% for author in entry.author_array %}
+    {% assign author_is_self = false %}
+    {% assign author_is_first = false %}
+    {% assign author_is_corresponding = false %}
+    {% assign author_full_name = author.last | append: " " | append: author.first %}
+
+    {% if author.last == site.scholar.last_name%}
+      {% if site.scholar.first_name contains author.first%}
+        {% assign author_is_self = true %}
+      {% endif %}
+    {% endif %}
+
+    {% if first_authors contains author_full_name or forloop.first%}
+      {% assign author_is_first = true %}
+    {% endif %}
+
+    {% if corresponding_authors contains {{author_full_name}} %}
+      {% assign author_is_corresponding = true %}
+    {% endif %}
+    
+    {% if forloop.length == 1 %}
+      {% if author_is_self %}
+        <span style="color: #0A4EB9">{{author.last}}, {{author.first}}</span>
+      {% else %}
+        {{author.last}}, {{author.first}}
+      {% endif %}
+    {% else %}
+      {% unless forloop.last %}
+        {% if author_is_self %}
+          {% if author_is_first %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}<sup>#</sup>;</span>
+          {% elsif author_is_corresponding %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}*;</span>
+          {% else %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}};</span>
+          {% endif %}
+        {% else %}
+          {% if author_is_first %}
+            <span>{{author.last}}, {{author.first}}<sup>#</sup>;</span>
+          {% elsif author_is_corresponding %}
+            <span>{{author.last}}, {{author.first}}*;</span>
+          {% else %}
+            <span>{{author.last}}, {{author.first}};</span>
+          {% endif %}
+        {% endif %}
+      {% else %}
+        {% if author_is_self %}
+          {% if author_is_first %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}<sup>#</sup></span>
+          {% elsif author_is_corresponding %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}*</span>
+          {% else %}
+            <span style="color: #0A4EB9">{{author.last}}, {{author.first}}</span>
+          {% endif %}
+        {% else %}
+          {% if author_is_first %}
+            <span>{{author.last}}, {{author.first}}<sup>#</sup></span>
+          {% elsif author_is_corresponding %}
+            <span>{{author.last}}, {{author.first}}*</span>
+          {% else %}
+            <span>{{author.last}}, {{author.first}}</span>
+          {% endif %}
+        {% endif %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+</div>
+<div>
+  <span style="color: #048D67"><i>{{ entry.journal }}</i>, {{ entry.volume }}, {{ entry.pages }} ({{ entry.year }}) </span>
+  <br />
+  <span style="color: #000000; font-size: 0.85re">Published: {{entry.month | capitalize: }}, {{entry.year}}</span>
+</div>
+<!-- <div> -->
+<!--   Published on: {{ entry.month }}, {{ entry.year }}  -->
+<!-- </div> -->
+
+<!-- <div id="{{key}}&#45;materials"> -->
+<!--   <div> -->
+<!--     <div class="btn&#45;group btn&#45;block"> -->
+<!--       {% if entry.doi %} -->
+<!--         <button class="btn btn&#45;sm" type="button"> -->
+<!--           <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a> -->
+<!--         </button> -->
+<!--       {% endif %} -->
+<!--       &#38;nbsp; -->
+<!--       <button class="btn btn&#45;sm dropdown&#45;toggle" type="button" data&#45;toggle="dropdown"> -->
+<!--         BibTeX -->
+<!--       </button> -->
+<!--       &#38;nbsp; -->
+<!--       <div class="dropdown&#45;menu"> -->
+<!--         <pre class="pre pre&#45;scrollable">{{ entry.bibtex }}</pre> -->
+<!--       </div> -->
+<!--       {% if entry.abstract %} -->
+<!--         <div class="btn&#45;group btn&#45;block"> -->
+<!--           <button class="btn btn&#45;sm dropdown&#45;toggle" type="button" data&#45;toggle="dropdown"> -->
+<!--             Abstract -->
+<!--           </button> -->
+<!--           <div class="dropdown&#45;menu" style="text&#45;align: justify"> -->
+<!--             {{ entry.abstract }} -->
+<!--           </div> -->
+<!--         </div> -->
+<!--       {% endif %} -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+
+<!-- <div> -->
+<!--   {% if entry.doi %} -->
+<!-- 	<button class="btn btn&#45;sm" type="button"> -->
+<!-- 	  <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a> -->
+<!-- 	</button> -->
+<!--   {% endif %} -->
+<!--   <button type="button" class="btn btn&#45;sm" data&#45;toggle="modal" -->
+<!--                                            data&#45;target="{{ entry.key | prepend: "#mybib_" }}"> -->
+<!--     bibtex -->
+<!--   </button> -->
+<!--   {% if entry.abstract %} -->
+<!--     <button type="button" class="btn btn&#45;sm" data&#45;toggle="modal" -->
+<!--                                              data&#45;target="{{ entry.key | prepend: "#myabs_" }}"> -->
+<!--       abstract -->
+<!--     </button> -->
+<!--   {% endif %} -->
+<!--  -->
+<!--   <!&#45;&#45; Modal &#45;&#45;> -->
+<!--   {% if entry.abstract %} -->
+<!--   <div class="modal fade" id="{{ entry.key | prepend: "myabs_" }}" role="dialog"> -->
+<!--     <div class="modal&#45;dialog"> -->
+<!--       <!&#45;&#45; Modal content&#45;&#45;> -->
+<!--       <div class="modal&#45;content"> -->
+<!--         <div class="modal&#45;header"> -->
+<!--           <button type="button" class="close" data&#45;dismiss="modal">&#38;times;</button> -->
+<!--         </div> -->
+<!--         <div class="modal&#45;body"> -->
+<!--           <p> -->
+<!--             {{ entry.abstract }} -->
+<!-- 		  </p> -->
+<!--         </div> -->
+<!--         <div class="modal&#45;footer"> -->
+<!--           <button type="button" class="btn btn&#45;default" data&#45;dismiss="modal">Close</button> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!--   {% endif %} -->
+<!--  -->
+<!--   <div class="modal fade" id="{{ entry.key | prepend: "mybib_" }}" role="dialog"> -->
+<!--     <div class="modal&#45;dialog"> -->
+<!--       <!&#45;&#45; Modal content&#45;&#45;> -->
+<!--       <div class="modal&#45;content"> -->
+<!--         <div class="modal&#45;header"> -->
+<!--           <button type="button" class="close" data&#45;dismiss="modal">&#38;times;</button> -->
+<!--         </div> -->
+<!--         <div class="modal&#45;body"> -->
+<!--           <pre>{{ entry.bibtex }} </pre> -->
+<!--         </div> -->
+<!--         <div class="modal&#45;footer"> -->
+<!--           <button type="button" class="btn btn&#45;default" data&#45;dismiss="modal">Close</button> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->

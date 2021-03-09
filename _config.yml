@@ -22,6 +22,8 @@ title: Qijing Zheng                          # the main title
 
 tagline: |- # it will display as the sub-title
     <div style="height: 6px"> </div>
+    Research Associate Professor <br />
+    <div style="height: 6px"> </div>
     Department of Physics <br />
     <div style="height: 6px"> </div>
     University of Science &amp; Technology of China 
@@ -90,7 +92,7 @@ img_cdn: ''
 
 # the avatar on sidebar, support local or CORS resources
 # avatar: https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images/commons/avatar.jpg
-avatar: /assets/img/profile.jpg
+avatar: /assets/img/me/profile.jpg
 
 # boolean type, the global switch for ToC in posts.
 toc: true

@@ -84,7 +84,7 @@
 <div>
   <span style="color: #048D67"><i>{{ entry.journal }}</i>, {{ entry.volume }}, {{ entry.pages }} ({{ entry.year }}) </span>
   <br />
-  <span style="color: #000000">Published: {{entry.month | capitalize: }}, {{entry.year}}</span>
+  <span style="color: #000000; font-size: 0.85rem">Published: {{entry.month | capitalize: }}, {{entry.year}}</span>
 </div>
 <!-- <div> -->
 <!--   Published on: {{ entry.month }}, {{ entry.year }}  -->
@@ -122,16 +122,16 @@
 
 <div>
   {% if entry.doi %}
-	<button class="btn btn-sm" type="button">
+	<button class="btn btn-success btn-sm mr-1" type="button">
 	  <a href="http://dx.doi.org/{{entry.doi}}" target="_blank">Link</a>
 	</button>
   {% endif %}
-  <button type="button" class="btn btn-sm" data-toggle="modal"
+  <button type="button" class="btn btn-primary btn-sm mr-1" data-toggle="modal"
                                            data-target="{{ entry.key | prepend: "#mybib_" }}">
     bibtex
   </button>
   {% if entry.abstract %}
-    <button type="button" class="btn btn-sm" data-toggle="modal"
+    <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
                                              data-target="{{ entry.key | prepend: "#myabs_" }}">
       abstract
     </button>
@@ -140,7 +140,7 @@
   <!-- Modal -->
   {% if entry.abstract %}
   <div class="modal fade" id="{{ entry.key | prepend: "myabs_" }}" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 45%!important;" role="document">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -160,7 +160,7 @@
   {% endif %}
 
   <div class="modal fade" id="{{ entry.key | prepend: "mybib_" }}" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 45%!important;" role="document">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">

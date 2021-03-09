@@ -40,19 +40,19 @@ Google Scholar.
         {% assign journals = page.journals | split: ", " %}
         {% for j in journals %}
             {% assign jid =  j | replace: " ", "_"  | replace: ":", "-" %}
-            <button type="button" class="btn btn-sm mr-1 mt-2" data-toggle="modal" data-target="{{ jid | prepend: "#my_" }}">
+            <button type="button" class="btn btn-sm mr-1 mt-2" data-toggle="modal" data-target="{{ jid | prepend: '#my_' }}">
                 <span style="color: #048D67"> <i>{{ j }}</i> </span>:
                 {% bibliography_count -f zqj_pub -q @*[journal={{j}}] %}
             </button>
-            <div class="modal fade" id="{{ jid | prepend: "my_" }}">
-              <div class="modal-dialog" style="max-width: 45%!important;" role="document">
+            <div class="modal fade" id="{{ jid | prepend: 'my_' }}">
+              <div class="modal-dialog modal-dialog-centered" style="max-width: 45%!important;" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
                   <div class="modal-body">
                     <div>
-                        {% bibliography -f zqj_pub -q @*[journal={{j}}] %}
+                        {% bibliography -f zqj_pub -q @*[journal={{j}}] -T bib_2 %}
                     </div>
                   </div>
                   <div class="modal-footer">
